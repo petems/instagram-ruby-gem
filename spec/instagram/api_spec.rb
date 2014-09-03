@@ -235,6 +235,7 @@ describe Instagram::API do
           expect(output).to include 'INFO -- : Started GET request to: https://api.instagram.com/v1/users/self/feed.json'
           expect(output).to include 'DEBUG -- : Response Headers:'
           expect(output).to include "User-Agent : Instagram Ruby Gem #{Instagram::VERSION}"
+          expect(output).to include 'http://distillery.s3.amazonaws.com/media/2011/01/31/0f8e832c3dc6420bb6ddf0bd09f032f6_6.jpg'
         end
       end
     end
