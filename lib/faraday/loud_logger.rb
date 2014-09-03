@@ -30,10 +30,9 @@ module FaradayMiddleware
       private
 
       def filter(output)
-        unless ENV['DEBUG'] == '2'
+        if ENV['INSTAGRAM_GEM_REDACT']
           output = output.to_s.gsub(/client_id=[a-zA-Z0-9]*/,'client_id=[CLIENT-ID]')
-          output = output.to_s.gsub(/api_key=[a-zA-Z0-9]*/,'api_key=[API-KEY]')
-          output = output.to_s.gsub(/_digitalocean2_session_v2=[a-zA-Z0-9%-]*/,'_digitalocean2_session_v2=[SESSION_COOKIE]')
+          output = output.to_s.gsub(/access_token=[a-zA-Z0-9]*/,'access_token=[ACCESS-TOKEN]')
         else
           output
         end
