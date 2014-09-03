@@ -63,7 +63,7 @@ module FaradayMiddleware
 
         #{name} Body:
         -------------
-        #{body}
+        #{filter(body)}
         MESSAGE
       end
 
