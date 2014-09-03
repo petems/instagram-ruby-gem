@@ -238,6 +238,24 @@ describe Instagram::API do
           expect(output).to include 'http://distillery.s3.amazonaws.com/media/2011/01/31/0f8e832c3dc6420bb6ddf0bd09f032f6_6.jpg'
         end
       end
+
+      context "shows STDOUT output when errors occur"
+
+      before do
+        stub_get('users/self/feed.json').
+        to_return(:body => '{"meta":{"error_message": "Bad words are bad."}}', :status => 400)
+      end
+
+      it "should return the body error message" do
+        output = capture_output do
+          @client.user_media_feed() rescue nil
+        end
+
+        expect(output).to include 'INFO -- : Started GET request to: https://api.instagram.com/v1/users/self/feed.json'
+        expect(output).to include 'DEBUG -- : Response Headers:'
+        expect(output).to include "User-Agent : Instagram Ruby Gem #{Instagram::VERSION}"
+        expect(output).to include '{"meta":{"error_message": "Bad words are bad."}}'
+      end
     end
   end
 end
